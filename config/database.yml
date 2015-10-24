@@ -1,0 +1,24 @@
+default: &default
+  adapter: mysql2
+  host: localhost
+  username: <%= ENV['MYSQL_USERNAME'] || 'root' %>
+  password: <%= ENV['MYSQL_PASSWORD'] %>
+  database: gympasstv_dev
+
+development:
+  <<: *default
+  database: gympasstv_dev
+  username: gympasstv_dev
+  password: gympasstv_dev
+
+test:
+  <<: *default
+  database: gympasstv_test
+
+staging:
+  <<: *default
+  database: gympasstv_prod
+
+production:
+  <<: *default
+  database: gympasstv_prod
