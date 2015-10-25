@@ -7,9 +7,9 @@ default: &default
 
 development:
   <<: *default
-  database: gympasstv_dev
-  username: gympasstv_dev
-  password: gympasstv_dev
+  database: gympasstv_prod
+  username: gympasstv_prod
+  password: '6y39a0018'
 
 test:
   <<: *default
@@ -22,3 +22,5 @@ staging:
 production:
   <<: *default
   database: gympasstv_prod
+  username: gympasstv_prod
+  password: '6y39a0018'
