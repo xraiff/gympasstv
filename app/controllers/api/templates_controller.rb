@@ -3,7 +3,7 @@ module Api
     respond_to :js
 
     def index
-      render js: "var Template = function() { return \"#{xml}\" }"
+      render js: "var Template = function() { return `#{xml}` }"
     end
 
     protected
@@ -40,13 +40,13 @@ module Api
         end
         d.formTemplate do |f|
           f.banner do |b|
-            b.title 'Title'
-            b.description 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+            b.title 'GymPass TV'
+            b.description 'Find gyms in your area.'
           end
-          f.textField 'Placeholder text'
+          f.textField 'zipcode'
           f.footer do |ft|
             ft.button do |bu|
-              bu.text 'Button text'
+              bu.text 'Go'
             end
           end
         end
