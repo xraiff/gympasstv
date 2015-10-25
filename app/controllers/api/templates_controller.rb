@@ -6,6 +6,10 @@ module Api
       render js: "var Template = function() { return `#{xml}` }"
     end
 
+    # def show
+    #   render js: "var Template = function() { return `#{xml}` }"
+    # end
+
     protected
 
     # "<?xml version='1.0' encoding='UTF-8' ?>
@@ -45,8 +49,13 @@ module Api
           end
           f.textField 'zipcode'
           f.footer do |ft|
-            ft.button do |bu|
-              bu.text 'Go'
+            ft.row do |row|
+              ft.button('tv-align' => 'center', 'id' => 'track') do |bu|
+                bu.text 'Play'
+              end
+              ft.button('tv-align' => 'center', 'reload' => true) do |re|
+                re.text 'Reload'
+              end
             end
           end
         end
