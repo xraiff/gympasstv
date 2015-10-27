@@ -31,7 +31,7 @@ var Videos = {
     artworkImageURL: "",
     contentRatingDomain: "movie",
     contentRatingRanking: 400,
-    url: "https://s3.amazonaws.com/gympasstv/VID_20140521_151727_875.mp4"
+    url: "http://gympass.tv/stream480/prog.m3u8"
   }],
 
   playlist: [{

@@ -2,7 +2,7 @@ default: &default
   adapter: mysql2
   host: localhost
   username: <%= ENV['MYSQL_GYMPASSTV_USERNAME'] || 'root' %>
-  password: <%= ENV['MYSQL_GYMPASSTV_PASSWORD'] %>
+  password: <%= ENV['MYSQL_GYMPASSTV_PASSWORD'] || 'mysql' %>
   database: gympasstv_dev
 
 development:

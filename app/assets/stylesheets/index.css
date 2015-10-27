@@ -1,0 +1,11 @@
+.center {
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+}
+
+.center-wide {
+  margin: auto;
+  width: 80%;
+  padding: 10px;
+}

@@ -11,6 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20151027051838) do
+
+  create_table "gym_media", force: :cascade do |t|
+    t.string   "mime_type",  limit: 255
+    t.string   "name",       limit: 255
+    t.string   "path",       limit: 255
+    t.integer  "size",       limit: 4
+    t.integer  "width",      limit: 4
+    t.integer  "height",     limit: 4
+    t.string   "encoding",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
 end
