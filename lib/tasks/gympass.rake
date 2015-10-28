@@ -29,7 +29,7 @@ namespace :gympass do
 
   def perform(dummy)
     dir = Rails.root.join('tmp')
-    convert(dir, 'umc.mp4', '640')
+    convert(dir, 'soccer.mp4', '640')
     upload(dir.join('640'), 'test/640')
   end
 
@@ -72,7 +72,7 @@ namespace :gympass do
     Dir.foreach(source_dir) do |filename|
       #s3_bucket.objects["#{s3_dest_dir}/#{filename}"].write(s3_options('video/MP2T').merge(:file => Pathname.new(source_dir.join(filename))))
 
-      obj = s3.bucket(ENV['AWS_S3_BUCKET']).object("#{s3_dest_dir}/#{filename}")
+      obj = s3.bucket(ENV['AWS_BUCKET']).object("#{s3_dest_dir}/#{filename}")
       options = filename.match(/\.m3u8$/) ? s3_options('application/x-mpegURL') : s3_options('video/MP2T')
       obj.upload_file(source_dir.join(filename))
     end
