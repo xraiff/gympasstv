@@ -17,8 +17,9 @@ namespace :gympass do
     # File.unlink(filepath)
   end
 
-  task :upload => :environment do
-    upload(Rails.root.join('tmp').join('640'), 'umc/640')
+  task :upload, [:dirpath] => :environment do |args, arghash|
+    dirpath = arghash[:dirpath]
+    upload(Rails.root.join('tmp').join(dirpath), dirpath)
   end
 
   # Convert and import a movie
@@ -72,9 +73,11 @@ namespace :gympass do
     Dir.foreach(source_dir) do |filename|
       #s3_bucket.objects["#{s3_dest_dir}/#{filename}"].write(s3_options('video/MP2T').merge(:file => Pathname.new(source_dir.join(filename))))
 
-      obj = s3.bucket(ENV['AWS_BUCKET']).object("#{s3_dest_dir}/#{filename}")
-      options = filename.match(/\.m3u8$/) ? s3_options('application/x-mpegURL') : s3_options('video/MP2T')
-      obj.upload_file(source_dir.join(filename))
+      if !filename.match(/^\./)
+        obj = s3.bucket(ENV['AWS_BUCKET']).object("#{s3_dest_dir}/#{filename}")
+        options = filename.match(/\.m3u8$/) ? s3_options('application/x-mpegURL') : s3_options('video/MP2T')
+        obj.upload_file(source_dir.join(filename), options)
+      end
     end
   end
 
