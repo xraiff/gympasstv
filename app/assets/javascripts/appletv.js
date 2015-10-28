@@ -31,7 +31,7 @@ var Videos = {
     artworkImageURL: "",
     contentRatingDomain: "movie",
     contentRatingRanking: 400,
-    url: "https://s3.amazonaws.com/gympasstv/umc/640x360.m3u8"
+    url: "https://s3.amazonaws.com/gympasstv/umc/640/prog.m3u8"
   }],
 
   playlist: [{
