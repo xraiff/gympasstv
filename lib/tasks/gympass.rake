@@ -19,6 +19,7 @@ namespace :gympass do
 
   task :upload, [:dirpath] => :environment do |args, arghash|
     dirpath = arghash[:dirpath]
+    puts "dirpath = #{dirpath}"
     upload(Rails.root.join('tmp').join(dirpath), dirpath)
   end
 
@@ -73,9 +74,12 @@ namespace :gympass do
     Dir.foreach(source_dir) do |filename|
       #s3_bucket.objects["#{s3_dest_dir}/#{filename}"].write(s3_options('video/MP2T').merge(:file => Pathname.new(source_dir.join(filename))))
 
+      puts "uploading #{filename}"
+
       if !filename.match(/^\./)
         obj = s3.bucket(ENV['AWS_BUCKET']).object("#{s3_dest_dir}/#{filename}")
         options = filename.match(/\.m3u8$/) ? s3_options('application/x-mpegURL') : s3_options('video/MP2T')
+        puts "options = #{options.to_s}"
         obj.upload_file(source_dir.join(filename), options)
       end
     end
@@ -93,7 +97,7 @@ namespace :gympass do
 
   def s3_options(mime_type)
     {
-        acl: :public_read,
+        acl: "public-read",
         content_type: mime_type,
         cache_control: "max-age=#{1.week.to_i}"
     }
