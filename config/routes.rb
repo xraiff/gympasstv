@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get '/api/templates', to: "api/templates#index", defaults: { format: 'js' }
+  get '/templates/home', to: "templates/home#index", defaults: { format: 'js' }
 
 
   # The priority is based upon order of creation: first created -> highest priority.

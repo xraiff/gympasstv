@@ -1,5 +1,5 @@
-module Api
-  class ApiController < ApplicationController
+module Templates
+  class TemplatesController < ApplicationController
 
     helper_method :ios_request?
 

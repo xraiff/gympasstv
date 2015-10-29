@@ -1,5 +1,5 @@
-module Api
-  class TemplatesController < ApiController
+module Templates
+  class HomeController < TemplatesController
     respond_to :js
 
     def index
@@ -44,16 +44,16 @@ module Api
         end
         d.formTemplate do |f|
           f.banner do |b|
-            b.title 'GymPass TV'
+            b.img(:src => 'http://localhost:3000/assets/GymPassTv_logo.jpg')
             b.description 'Find gyms in your area.'
           end
           f.textField 'zipcode'
           f.footer do |ft|
-            ft.row do |row|
-              ft.button('tv-align' => 'center', 'id' => 'track') do |bu|
+            ft.divTemplate do |row|
+              row.button('tv-align' => 'center', 'id' => 'play', 'data-video' => 'track', ) do |bu|
                 bu.text 'Play'
               end
-              ft.button('tv-align' => 'center', 'reload' => true) do |re|
+              row.button('tv-align' => 'center', 'id' => 'reload') do |re|
                 re.text 'Reload'
               end
             end

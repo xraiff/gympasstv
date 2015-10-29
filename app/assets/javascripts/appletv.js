@@ -76,27 +76,35 @@ var Videos = {
 App.onLaunch = function(options) {
   resourceLoader = new ResourceLoader(options.BASEURL);
 
-  var index = resourceLoader.loadResource(`${options.BASEURL}api/templates.js`,
+  var index = resourceLoader.loadResource(`${options.BASEURL}templates/home.js`,
   function(resource) {
     var doc = Presenter.makeDocument(resource);
     //doc.addEventListener("select", Presenter.load.bind(Presenter));
-    doc.addEventListener("select", handlePlayEvent);
+    doc.addEventListener("select", dispatchSelectEvent);
     //doc.addEventListener("reload", handleReloadEvent);
     navigationDocument.pushDocument(doc);
   });
 }
 
+function dispatchSelectEvent(event) {
+  console.log("dispatch select event");
+  var id = event.target.getAttribute("id")
+  switch (id) {
+    case 'play':
+      handlePlayEvent(event);
+      break;
+    case 'reload':
+      App.reload();
+      break;
+  }
+}
+
 
 function handlePlayEvent(event) {
   console.log("handle Play Event");
-  var id = event.target.getAttribute("id"),
-    videos = Videos[id];
+  var video = event.target.getAttribute('data-video'),
+    videos = Videos[video];
   startPlayback(videos);
-}
-
-function handleReloadEvent(event) {
-  console.log("handle Reload Event");
-  App.reload();
 }
 
 
