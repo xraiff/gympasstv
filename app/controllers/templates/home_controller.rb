@@ -6,10 +6,6 @@ module Templates
       render js: "var Template = function() { return `#{xml}` }"
     end
 
-    # def show
-    #   render js: "var Template = function() { return `#{xml}` }"
-    # end
-
     protected
 
     # "<?xml version='1.0' encoding='UTF-8' ?>
@@ -42,25 +38,53 @@ module Templates
         d.head do |h|
           h.style  '.longDescriptionLayout { max-width: 1280; }'
         end
-        d.formTemplate do |f|
+        d.formTemplate(:id => 'zipform}') do |f|
           f.banner do |b|
             b.img(:src => 'http://localhost:3000/assets/GymPassTv_logo.jpg')
             b.description 'Find gyms in your area.'
           end
-          f.textField 'zipcode'
+          f.textField('Enter Zipcode', :id => 'zipcode', :keyboardType => 'numberPad')
           f.footer do |ft|
-            ft.divTemplate do |row|
-              row.button('tv-align' => 'center', 'id' => 'play', 'data-video' => 'track', ) do |bu|
-                bu.text 'Play'
-              end
-              row.button('tv-align' => 'center', 'id' => 'reload') do |re|
-                re.text 'Reload'
+            ft.button('tv-align' => 'center', 'class' => 'search', 'data' => 'track', ) do |bu|
+              bu.text 'Search'
+            end
+          end
+        end
+      end
+    end
+
+    def xmlOld
+      xml = Builder::XmlMarkup.new( :indent => 2)
+      xml.instruct!
+      xml.document do |d|
+        d.head do |h|
+          h.style  '.longDescriptionLayout { max-width: 1280; }'
+        end
+        d.formTemplate(:id => 'zipform}') do |f|
+          f.banner do |b|
+            b.img(:src => 'http://localhost:3000/assets/GymPassTv_logo.jpg')
+            b.description 'Find gyms in your area.'
+          end
+          f.textField('Enter Zipcode', :id => 'zipcode', :keyboardType => 'numberPad')
+          f.collectionList do |col|
+            col.list(:class => 'suggestionListLayout') do |li|
+              li.section do |s|
+                # s.header do |h|
+                #   h.title 'Suggestions'
+                # end
+                s.listItemLockup(:value => 'grid', :id => 'play', :class => 'play', 'data' => 'track') do |lil|
+                  lil.title 'Play'
+                end
+                s.listItemLockup(:id => 'reload', :class => 'reload') do |lil2|
+                  lil2.title 'Reload'
+                end
               end
             end
           end
         end
       end
     end
+
   end
 end
 

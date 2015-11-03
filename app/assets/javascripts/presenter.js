@@ -106,7 +106,7 @@ var Presenter = {
    *
    * @param {Event} event - The select event
    */
-  load: function(event) {
+    load: function(event) {
     console.log(event);
 
     var self = this,
@@ -139,6 +139,9 @@ var Presenter = {
              presented to the user. See the implementation of makeDocument below.
              */
             var doc = self.makeDocument(resource);
+
+            // DOM Document "onload" event
+            doc.addEventListener("load", self.dispatch.bind(self));
 
             /*
              Event listeners are used to handle and process user actions or events. Listeners

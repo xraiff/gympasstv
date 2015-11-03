@@ -62,6 +62,11 @@ var Videos = {
   }]
 };
 
+var GPTV = {
+  zipcode: null,
+  options: {}
+};
+
 /**
  * @description The onLaunch callback is invoked after the application JavaScript
  * has been parsed into a JavaScript context. The handler is passed an object
@@ -75,23 +80,30 @@ var Videos = {
  */
 App.onLaunch = function(options) {
   resourceLoader = new ResourceLoader(options.BASEURL);
+  GPTV.options = options;
 
   var index = resourceLoader.loadResource(`${options.BASEURL}templates/home.js`,
   function(resource) {
+    console.log("1st loadResource callback");
     var doc = Presenter.makeDocument(resource);
     //doc.addEventListener("select", Presenter.load.bind(Presenter));
-    doc.addEventListener("select", dispatchSelectEvent);
-    //doc.addEventListener("reload", handleReloadEvent);
+    doc.addEventListener("select", handleSelectEvent);
+    var keyboard = doc.getElementById("zipcode").getFeature("Keyboard");
+    keyboard.onTextChange = function(event) { handleTextChange(keyboard.text); }
+
     navigationDocument.pushDocument(doc);
   });
 }
 
-function dispatchSelectEvent(event) {
-  console.log("dispatch select event");
-  var id = event.target.getAttribute("id")
-  switch (id) {
+function handleSelectEvent(event) {
+  console.log("handle select event");
+  var klass = event.target.getAttribute("class");
+  switch (klass) {
     case 'play':
       handlePlayEvent(event);
+      break;
+    case 'search':
+      search(GPTV.zipcode);
       break;
     case 'reload':
       App.reload();
@@ -99,14 +111,33 @@ function dispatchSelectEvent(event) {
   }
 }
 
+function handleTextChange(newText) {
+  console.log("handleTextChange : " + newText);
+  GPTV.zipcode = newText;
+}
+
+function handleFormEvent(event) {
+  console.log("handle form event");
+  var id = event.target.getAttribute("id");
+  console.log("value = " + event.target.value);
+}
 
 function handlePlayEvent(event) {
   console.log("handle Play Event");
-  var video = event.target.getAttribute('data-video'),
-    videos = Videos[video];
-  startPlayback(videos);
+  var video = JSON.parse(event.target.getAttribute('data'));
+  startPlayback([video]);
 }
 
+function search(zipcode) {
+  var index = resourceLoader.loadResource(`${GPTV.options.BASEURL}templates/search.js?zipcode=${zipcode}`,
+  function(resource) {
+    console.log("2nd loadResource callback");
+    var doc = Presenter.makeDocument(resource);
+    //doc.addEventListener("select", Presenter.load.bind(Presenter));
+    doc.addEventListener("select", handleSelectEvent);
+    navigationDocument.pushDocument(doc);
+  });
+}
 
 /**
  * This convenience funnction returns an alert template, which can be used to present errors to the user.
