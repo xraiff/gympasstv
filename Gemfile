@@ -12,6 +12,10 @@ group :production, :staging do
   gem 'passenger'
 end
 
+# auth
+gem 'devise'
+gem 'devise-async'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass'

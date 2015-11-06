@@ -4,8 +4,11 @@ module Templates
 
     def index
       baseurl = "http://localhost:3000"
-      results = [{:img => "#{baseurl}/assets/umc_logo3.png", :title => 'Title 1'},
+      results = [{:img => "#{baseurl}/assets/umc_logo3.png", :movie => true, :title => 'Title 1'},
                 {:img => "#{baseurl}/assets/GymPassTv_logo.jpg", :title => 'Title 2'},
+                {:img => "#{baseurl}/assets/scooby1.jpg", :title => 'Scooby User', :link => 'https://www.youtube.com/user/scooby1961'},
+                {:img => "#{baseurl}/assets/scooby2.jpg", :title => 'Scooby Channel', :link => 'https://www.youtube.com/channel/UC1XHNZDn3btv7454Pkz7THg'},
+                {:img => "#{baseurl}/assets/scooby3.jpg", :title => 'Scooby Video', :link => 'https://www.youtube.com/watch?v=mRznU6pzez0'},
                 {:img => "#{baseurl}/assets/movie_3.lcr", :title => 'Title 3'},
                 {:img => "#{baseurl}/assets/movie_4.lcr", :title => 'Title 4'},
                 {:img => "#{baseurl}/assets/movie_5.lcr", :title => 'Title 5'},
@@ -46,7 +49,7 @@ module Templates
               end
               sh.section do |sec|
                 results.each do |result|
-                  if result[:img] =~ /logo/
+                  if result[:movie]
                     blob = {title: "UMC Bootcamps",
                         subtitle: "no workout is the same",
                         description: "",
@@ -55,6 +58,11 @@ module Templates
                         contentRatingRanking: 400,
                         url: "https://s3.amazonaws.com/gympasstv/umc/640/prog.m3u8" }
                     sec.lockup(:class => 'play', :data => blob.to_json) do |lck|
+                      lck.img(:src => result[:img], :width => 500, :height => 281)
+                      lck.title result[:title]
+                    end
+                  elsif result[:link]
+                    sec.lockup(:class => 'link', :data => result[:link]) do |lck|
                       lck.img(:src => result[:img], :width => 500, :height => 281)
                       lck.title result[:title]
                     end

@@ -98,7 +98,17 @@ App.onLaunch = function(options) {
 function handleSelectEvent(event) {
   console.log("handle select event");
   var klass = event.target.getAttribute("class");
+
   switch (klass) {
+    case 'link':
+      try {
+        var url = event.target.getAttribute('data');
+        objectwrapper.openURL(url);
+      } catch(err) {
+        console.log(err.message);
+      }
+
+      break;
     case 'play':
       handlePlayEvent(event);
       break;
